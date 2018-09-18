@@ -29,16 +29,16 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody,
                         <p>--   {iComment.author},&nbsp;
                           {new Intl.DateTimeFormat('en-GB', {
                                 year: 'numeric',
-                                month: 'long',
+                                month: 'short',
                                 day: '2-digit'
-                            }).format(new Date(iComment.date))}</p>
+                            }).format(new Date(Date.parse(iComment.date)))}</p>
                     </li>
                     );
                     if(commentList)
                         return (
                             <div>
                               <h4>Comments</h4>
-                              <ul className="list-inline">{commentList}</ul>
+                              <ul className='list-unstyled'>{commentList}</ul>
                             </div>)
                     else
                     return (
