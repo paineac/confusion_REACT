@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 
     function RenderLeader({leader}) {
          return (
-           <div key={leader.id} className="col-12 mt-5">
-             <Media tag="li">
+             <Media className="col-12 mt-5" tag="li">
                <Media left middle>
                    <Media object src={leader.image} alt={leader.name} />
                </Media>
@@ -15,9 +14,8 @@ import { Link } from 'react-router-dom';
                  <p>{leader.description}</p>
                </Media>
              </Media>
-           </div>
          );
-         }
+     }
 
  const About = (props) => {
 
@@ -83,13 +81,12 @@ import { Link } from 'react-router-dom';
                 <div className="col-12">
                     <h2>Corporate Leadership</h2>
                 </div>
-                <div className="col-12">
                     <Media list>
                         {leaders}
                     </Media>
                 </div>
             </div>
-        </div>
+
     );
 }
 
