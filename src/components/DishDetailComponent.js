@@ -27,9 +27,8 @@ toggleModal() {
 }
 
 handleSubmit(values) {
- console.log('Current State is: ' + JSON.stringify(values));
- alert('Current State is: ' + JSON.stringify(values));
-
+    this.toggleModal();
+    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
 }
 
 render() {
@@ -56,9 +55,9 @@ render() {
                         </Col>
                     </Row>
                     <Row className="form-group">
-                        <Label htmlFor="yourName" md={2}>Your Name</Label>
+                        <Label htmlFor="author" md={2}>Your Name</Label>
                         <Col md={10}>
-                            <Control.text model=".yourName" id="yourName" name="yourName"
+                            <Control.text model=".author" id="author" name="author"
                                 placeholder="Your Name"
                                 className="form-control"
                                 validators={{
@@ -67,7 +66,7 @@ render() {
                                  />
                             <Errors
                                 className="text-danger"
-                                model=".yourName"
+                                model=".author"
                                 show="touched"
                                 messages={{
                                     minLength: 'Must be greater than 2 characters ',
@@ -77,9 +76,9 @@ render() {
                         </Col>
                     </Row>
                     <Row className="form-group">
-                        <Label htmlFor="message" md={2}>Comment</Label>
+                        <Label htmlFor="comment" md={2}>Comment</Label>
                         <Col md={10}>
-                            <Control.textarea model=".message" id="message" name="message"
+                            <Control.textarea model=".comment" id="comment" name="comment"
                                 rows="12"
                                 className="form-control" />
                         </Col>
@@ -120,7 +119,7 @@ render() {
                 }
             }
 
-    function RenderComments({comments}) {
+    function RenderComments({comments, addComment, dishId}) {
         const CommentList = comments.map(i =>
             <li key={i.id}>
                 {i.comment}
@@ -132,7 +131,7 @@ render() {
                 }).format(new Date(Date.parse(i.date)))}</p>
             </li>
             );
-        if(CommentList.length == 0){
+        if(CommentList.length === 0){
             return (
 <               div></div>)}
             else {
@@ -142,10 +141,11 @@ render() {
                         <ul className="list-unstyled">
                             {CommentList}
                         </ul>
-                            <CommentForm/>
+                        <CommentForm dishId={dishId} addComment={addComment} />
+
                     </div>
                     )
-                };
+                }
             }
 
         const  DishDetail = (props) => {
@@ -167,10 +167,13 @@ render() {
                                <RenderDish dish={props.dish} />
                            </div>
                            <div className="col-12 col-md-5 m-1">
-                               <RenderComments comments={props.comments} />
+                               <RenderComments comments={props.comments}
+                                   addComment={props.addComment}
+                                   dishId={props.dish.id}
+                               />
                            </div>
                        </div>
-                   </div>
+                         </div>
           )}
               else {
                   return (
