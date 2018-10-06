@@ -30,7 +30,7 @@ toggleModal() {
 
 handleSubmit(values) {
     this.toggleModal();
-    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+    this.props.omment(this.props.dishId, values.rating, values.author, values.comment);
 }
 
 render() {
@@ -121,7 +121,7 @@ render() {
                 }
             }
 
-    function RenderComments({comments, addComment, dishId}) {
+    function RenderComments({comments, postComment, dishId}) {
         const CommentList = comments.map(i =>
             <li key={i.id}>
                 {i.comment}
@@ -143,7 +143,7 @@ render() {
                         <ul className="list-unstyled">
                             {CommentList}
                         </ul>
-                        <CommentForm dishId={dishId} addComment={addComment} />
+                        <CommentForm dishId={dishId} postComment={postComment} />
 
                     </div>
                     )
@@ -188,7 +188,7 @@ render() {
                            </div>
                            <div className="col-12 col-md-5 m-1">
                                <RenderComments comments={props.comments}
-                                   addComment={props.addComment}
+                                   postComment={props.postComment}
                                    dishId={props.dish.id}
                                />
                            </div>
