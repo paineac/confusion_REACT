@@ -1,32 +1,65 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
-    function RenderLeader({leader}) {
-         return (
-             <Media className="col-12 mt-5" tag="li">
-               <Media left middle>
-                   <Media object src={leader.image} alt={leader.name} />
-               </Media>
-               <Media body className="ml-5">
-                 <Media heading>{leader.name}</Media>
-                 <p>{leader.designation}</p>
-                 <p>{leader.description}</p>
-               </Media>
-             </Media>
-         );
-     }
+function RenderLeaders({leaders}) {
+    return(
+        <Media list>
+            <Stagger in>
+                {leaders.leaders.map((leader) => {
+                    return (
+                        <Fade in>
+                            <div className="col-12 m-1"  key={leader.id}>
+                                <Media className="col-12" tag="li">
+                                    <Media left middle>
+                                        <Media object src={baseUrl + leader.image} alt={leader.name} />
+                                    </Media>
+                                    <Media body className="ml-5">
+                                        <Media heading>{leader.name}</Media>
+                                            <p>{leader.designation}</p>
+                                            <p>{leader.description}</p>
+                                    </Media>
+                                </Media>
 
- const About = (props) => {
+                            </div>
+                        </Fade>
+                    );})}
+            </Stagger>
+        </Media>
+    );
+}
 
-    const leaders = props.leaders.map((leader) => {
-        return (
-            <div className="col-12 m-1"  key={leader.id}>
-                <RenderLeader leader={leader} />
+const leaders = (leaders)  => {
+    if (leaders.isLoading) {
+         return(
+            <div className="container">
+                <div className="row">
+                    <Loading />
+                </div>
             </div>
         );
-    });
+    }
+    else if (leaders.errMess) {
+        return(
+            <div className="container">
+                <div className="row">
+                    <div className="col-12">
+                        <h4>{leaders.errMess}</h4>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+    else
+        return (
+            <RenderLeaders leaders={leaders} />
+         );
+}
 
+ const About = (props) => {
     return(
         <div className="container">
             <div className="row">
@@ -75,18 +108,17 @@ import { Link } from 'react-router-dom';
                             </blockquote>
                         </CardBody>
                     </Card>
+
                 </div>
             </div>
+
             <div className="row row-content">
                 <div className="col-12">
                     <h2>Corporate Leadership</h2>
                 </div>
-                    <Media list>
-                        {leaders}
-                    </Media>
+                    {leaders(props.leaders)}
                 </div>
             </div>
-
     );
 }
 

@@ -4,6 +4,7 @@ import { Breadcrumb, BreadcrumbItem,
             Button, Row, Col, Label } from 'reactstrap';
 import { Control, Form, Errors } from 'react-redux-form';
 
+
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
@@ -15,15 +16,12 @@ class Contact extends Component {
     constructor(props) {
         super(props);
 
-
         this.handleSubmit = this.handleSubmit.bind(this);
 
     }
 
-
     handleSubmit(values) {
-        console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
+        this.props.postFeedback(values);
         this.props.resetFeedbackForm();
         // event.preventDefault();
     }
